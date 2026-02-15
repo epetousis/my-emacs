@@ -19,7 +19,7 @@
   }@inputs:
     let
       overlay = final: prev: {
-        emacs-lsp-booster = final.callPackage ./default.nix { };
+        emacs-lsp-booster = final.callPackage ./default.nix {};
         evans-emacs = final.callPackage ./package.nix {};
       };
       supportedSystems = [
@@ -32,10 +32,15 @@
       nixpkgsFor = forAllSystems (system:
         import nixpkgs {
           inherit system;
-          overlays = [ overlay ];
+          overlays = [
+            overlay
+            emacs-overlay.overlays.package
+          ];
         });
     in {
-      overlays.default = overlay;
+      overlays.default = final: prev:
+        (overlay final prev)
+        // (emacs-overlay.overlays.package final prev);
 
       packages = forAllSystems (system: rec {
         default = evans-emacs;
