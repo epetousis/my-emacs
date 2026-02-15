@@ -39,8 +39,13 @@
         });
     in {
       overlays.default = final: prev:
-        (overlay final prev)
-        // (emacs-overlay.overlays.package final prev);
+        let
+          overlays = [
+            overlay
+            emacs-overlay.overlays.package
+          ];
+        in
+          prev.lib.composeManyExtensions overlays final prev;
 
       packages = forAllSystems (system: rec {
         default = evans-emacs;
