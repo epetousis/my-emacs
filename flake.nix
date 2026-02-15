@@ -27,8 +27,8 @@
       packages = nixpkgs.lib.genAttrs supportedSystems (system: let
         pkgs = import nixpkgs { inherit system; };
       in rec {
-        default = evansEmacs;
-        evansEmacs = pkgs.callPackage ./package.nix {};
+        default = evans-emacs;
+        evans-emacs = pkgs.callPackage ./package.nix {};
       });
     };
 }
