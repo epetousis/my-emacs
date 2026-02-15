@@ -18,17 +18,28 @@
       ...
   }@inputs:
     let
+      overlay = final: prev: {
+        emacs-lsp-booster = final.callPackage ./default.nix { };
+        evans-emacs = final.callPackage ./package.nix {};
+      };
       supportedSystems = [
-        "aarch64-darwin"
         "aarch64-linux"
         "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
       ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      nixpkgsFor = forAllSystems (system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ overlay ];
+        });
     in {
-      packages = nixpkgs.lib.genAttrs supportedSystems (system: let
-        pkgs = import nixpkgs { inherit system; };
-      in rec {
+      overlays.default = overlay;
+
+      packages = forAllSystems (system: rec {
         default = evans-emacs;
-        evans-emacs = pkgs.callPackage ./package.nix {};
+        evans-emacs = nixpkgsFor.${system}.evans-emacs;
       });
     };
 }
