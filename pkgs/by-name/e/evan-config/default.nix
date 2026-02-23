@@ -17,7 +17,6 @@
   fireplace,
   htmlize,
   hunspell,
-  hunspellDicts,
   magit,
   markdown-mode,
   nix-mode,
@@ -31,7 +30,7 @@ trivialBuild {
   pname = "evan-config";
   version = "1970-01-01";
   src = replaceVars ./default.el {
-    hunspell = hunspell.withDicts [ hunspellDicts.en_AU-large ];
+    hunspell = hunspell.withDicts (dpkgs: [ dpkgs.en_AU-large ]);
   };
   packageRequires = [
     breadcrumb
