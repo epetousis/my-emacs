@@ -16,8 +16,8 @@
   evil,
   fireplace,
   htmlize,
+  hunspell,
   hunspellDicts,
-  hunspellWithDicts,
   magit,
   markdown-mode,
   nix-mode,
@@ -31,7 +31,7 @@ trivialBuild {
   pname = "evan-config";
   version = "1970-01-01";
   src = replaceVars ./default.el {
-    hunspell = hunspellWithDicts [ hunspellDicts.en_AU-large ];
+    hunspell = hunspell.withDicts [ hunspellDicts.en_AU-large ];
   };
   packageRequires = [
     breadcrumb
