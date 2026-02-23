@@ -244,8 +244,8 @@ The argument LOCATION can be any path to a Nix flake."
 ;; (add-hook 'eglot-managed-mode-hook 'eglot-booster-mode)
 
 ;; Configure hunspell for markdown mode
-(setq ispell-program-name "hunspell")
-(setq ispell-local-dictionary "en_AU")
+(setq ispell-program-name "@hunspell@/bin/hunspell")
+(setq ispell-dictionary "en_AU")
 (add-hook 'markdown-mode-hook 'flyspell-mode)
 (add-hook 'markdown-mode-hook 'flyspell-buffer)
 

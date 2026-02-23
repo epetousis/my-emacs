@@ -1,6 +1,7 @@
 {
   trivialBuild,
   callPackage,
+  replaceVars,
 
   breadcrumb,
   csv-mode,
@@ -15,6 +16,8 @@
   evil,
   fireplace,
   htmlize,
+  hunspellDicts,
+  hunspellWithDicts,
   magit,
   markdown-mode,
   nix-mode,
@@ -27,7 +30,9 @@
 trivialBuild {
   pname = "evan-config";
   version = "1970-01-01";
-  src = ./default.el;
+  src = replaceVars ./default.el {
+    hunspell = hunspellWithDicts [ hunspellDicts.en_AU-large ];
+  };
   packageRequires = [
     breadcrumb
     csv-mode
