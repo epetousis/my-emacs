@@ -15,15 +15,18 @@
   envrc,
   evil,
   fireplace,
+  fish,
   htmlize,
   hunspell,
   magit,
   markdown-mode,
+  nil,
   nix-mode,
   ox-slack,
   rust-mode,
   treesit-grammars,
   vterm,
+  vue-language-server,
   web-mode
 }:
 trivialBuild {
@@ -31,6 +34,7 @@ trivialBuild {
   version = "1970-01-01";
   src = replaceVars ./default.el {
     hunspell = hunspell.withDicts (dpkgs: [ dpkgs.en_AU-large ]);
+    inherit vue-language-server nil fish;
   };
   packageRequires = [
     breadcrumb

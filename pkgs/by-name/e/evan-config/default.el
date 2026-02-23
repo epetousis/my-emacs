@@ -24,8 +24,8 @@ apps are not started from a shell."
 ;;; Set up eglot
 (require 'eglot)
 (add-to-list 'eglot-server-programs
-             '(vue-mode . (eglot-volar "vue-language-server" "--stdio"))
-             '(nix-mode . ("nil")))
+             '(vue-mode . (eglot-volar "@vue-language-server@/bin/vue-language-server" "--stdio"))
+             '(nix-mode . ("@nil@/bin/nil")))
 
 (add-hook 'vue-mode-hook 'eglot-ensure)
 (add-hook 'nix-mode-hook 'eglot-ensure)
@@ -235,7 +235,7 @@ The argument LOCATION can be any path to a Nix flake."
 (envrc-global-mode)
 
 ;; Always use my desired shell (fish).
-(setq config-shell "/run/current-system/sw/bin/fish")
+(setq config-shell "@fish@/bin/fish")
 (if (file-exists-p config-shell)
     (setq vterm-shell config-shell))
 
