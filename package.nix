@@ -1,14 +1,14 @@
 { pkgs, lib, ... }:
 
 let
+  baseEmacs = pkgs.emacs31-pgtk;
   # Customise the app bundle with a new icon
   emacsPlusWithIcon = pkgs.callPackage ./lib/icon-override.nix {
-    # Disable native compilation on Darwin for the time being while Nixpkgs issue 395169 is fixed.
-    pkg = pkgs.emacs30-pgtk.override { withNativeCompilation = !pkgs.stdenv.hostPlatform.isDarwin; };
+    pkg = baseEmacs;
     iconPath = ./res/elrumo2.icns;
   };
   # On Linux, we use the pure GTK build to enable full Wayland support.
-  appropriateEmacs = if pkgs.stdenv.hostPlatform.isDarwin then emacsPlusWithIcon else pkgs.emacs30-pgtk;
+  appropriateEmacs = if pkgs.stdenv.hostPlatform.isDarwin then emacsPlusWithIcon else baseEmacs;
   # Finally, provide our customised emacs with our preferred packages.
   # (This should come as late as possible in the process.)
 in
